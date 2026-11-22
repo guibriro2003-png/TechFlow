@@ -1,25 +1,29 @@
 
-## Mudança de escopo
+## Como executar o projeto
 
-Durante o desenvolvimento do TechFlow, foi identificada a necessidade de melhorar a organização das tarefas.
+### Pré-requisitos
+- Python instalado
+- Git instalado
 
-Por isso, o escopo inicial foi ampliado para incluir:
+### Instalação
 
-- Classificação das tarefas em Baixa, Média e Alta prioridade.
-- Destaque visual para tarefas de alta prioridade.
-- Filtro para visualizar tarefas de acordo com sua prioridade.
+1. Clone o repositório:
+   git clone https://github.com/guibriro2003-png/TechFlow.git
 
-Essa mudança foi realizada para facilitar a identificação de tarefas urgentes e melhorar o gerenciamento das atividades.
+2. Entre na pasta:
+   cd TechFlow
 
-## Testes automatizados
+3. Instale as dependências:
+   pip install -r requirements.txt
 
-O projeto utiliza Pytest para validar suas funcionalidades.
+4. Execute o sistema:
+   python src/app.py
 
-Atualmente, são realizados testes de:
+5. Acesse no navegador:
+   http://127.0.0.1:5000
 
-- Cadastro de tarefas.
-- Atualização de tarefas.
-- Exclusão de tarefas.
-- Filtro por prioridade.
+### Executar os testes
 
-Os testes são executados automaticamente pelo GitHub Actions.
+Para executar os testes automatizados, utilize:
+
+pytest -v
