@@ -1,12 +1,7 @@
 
-from flask import Blueprint, request, redirect, url_for, render_template_string
+from flask import Blueprint, redirect, render_template_string, request, url_for
 
-from models import (
-    criar_tarefa,
-    listar_tarefas,
-    atualizar_tarefa,
-    excluir_tarefa
-)
+from models import atualizar_tarefa, criar_tarefa, excluir_tarefa, listar_tarefas
 
 rotas = Blueprint("rotas", __name__)
 

@@ -5,12 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import database
-from models import (
-    criar_tarefa,
-    listar_tarefas,
-    atualizar_tarefa,
-    excluir_tarefa
-)
+from models import atualizar_tarefa, criar_tarefa, excluir_tarefa, listar_tarefas
 
 
 def test_criar_tarefa(monkeypatch, tmp_path):
