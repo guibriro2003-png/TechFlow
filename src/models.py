@@ -1,53 +1,52 @@
-
 from database import conectar
 
 
-# Cadastra uma nova tarefa
-def criar_tarefa(titulo, descricao):
+def criar_tarefa(titulo, descricao, prioridade="Média"):
     conexao = conectar()
 
     conexao.execute(
-        """
-        INSERT INTO tarefas (titulo, descricao)
-        VALUES (?, ?)
-        """,
-        (titulo, descricao)
+        """INSERT INTO tarefas (titulo, descricao, prioridade)
+           VALUES (?, ?, ?)""",
+        (titulo, descricao, prioridade)
     )
 
     conexao.commit()
     conexao.close()
 
 
-# Lista todas as tarefas
-def listar_tarefas():
+def listar_tarefas(prioridade=None):
     conexao = conectar()
 
-    tarefas = conexao.execute(
-        "SELECT * FROM tarefas ORDER BY id DESC"
-    ).fetchall()
+    if prioridade:
+        tarefas = conexao.execute(
+            """SELECT * FROM tarefas
+               WHERE prioridade = ?
+               ORDER BY id DESC""",
+            (prioridade,)
+        ).fetchall()
+    else:
+        tarefas = conexao.execute(
+            "SELECT * FROM tarefas ORDER BY id DESC"
+        ).fetchall()
 
     conexao.close()
     return tarefas
 
 
-# Atualiza uma tarefa existente
-def atualizar_tarefa(id, titulo, descricao, status):
+def atualizar_tarefa(id, titulo, descricao, status, prioridade="Média"):
     conexao = conectar()
 
     conexao.execute(
-        """
-        UPDATE tarefas
-        SET titulo = ?, descricao = ?, status = ?
-        WHERE id = ?
-        """,
-        (titulo, descricao, status, id)
+        """UPDATE tarefas
+           SET titulo = ?, descricao = ?, status = ?, prioridade = ?
+           WHERE id = ?""",
+        (titulo, descricao, status, prioridade, id)
     )
 
     conexao.commit()
     conexao.close()
 
 
-# Exclui uma tarefa
 def excluir_tarefa(id):
     conexao = conectar()
 

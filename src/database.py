@@ -1,19 +1,15 @@
-
 import sqlite3
 from pathlib import Path
 
-# Define o caminho do banco de dados na pasta principal
 DATABASE = Path(__file__).resolve().parent.parent / "techflow.db"
 
 
-# Cria a conexão com o banco de dados
 def conectar():
     conexao = sqlite3.connect(DATABASE)
     conexao.row_factory = sqlite3.Row
     return conexao
 
 
-# Cria a tabela de tarefas caso ela não exista
 def criar_tabela():
     conexao = conectar()
 
@@ -22,9 +18,24 @@ def criar_tabela():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo TEXT NOT NULL,
             descricao TEXT,
-            status TEXT NOT NULL DEFAULT 'A Fazer'
+            status TEXT NOT NULL DEFAULT 'A Fazer',
+            prioridade TEXT NOT NULL DEFAULT 'Média'
         )
     """)
+
+    # Verifica se a coluna prioridade já existe
+    colunas = conexao.execute(
+        "PRAGMA table_info(tarefas)"
+    ).fetchall()
+
+    nomes_colunas = [coluna["name"] for coluna in colunas]
+
+    # Adiciona prioridade em bancos criados anteriormente
+    if "prioridade" not in nomes_colunas:
+        conexao.execute("""
+            ALTER TABLE tarefas
+            ADD COLUMN prioridade TEXT NOT NULL DEFAULT 'Média'
+        """)
 
     conexao.commit()
     conexao.close()
